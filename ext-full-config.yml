@@ -23,6 +23,13 @@ spec:
             port: 8080
           initialDelaySeconds: 3
           periodSeconds: 30
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -49,6 +56,13 @@ spec:
             port: 8080
           initialDelaySeconds: 3
           periodSeconds: 30
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
 ---
 apiVersion: v1
 kind: Service
@@ -87,7 +101,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.global-static-ip-name: "ip-ingress"
     networking.gke.io/managed-certificates: "my-managed-cert"
-    networking.gke.io/frontend-config: "my-frontend-config"
+#    networking.gke.io/frontend-config: "my-frontend-config"
     networking.gke.io/ingress.global-classic: "false"
 spec:
   rules:
@@ -145,9 +159,9 @@ spec:
   timeoutSec: 30
   connectionDraining:
     drainingTimeoutSec: 60
-  customRequestHeaders:
-    - name: X-Custom-Header
-      value: CustomValue
+#  customRequestHeaders:
+#    - name: X-Custom-Header
+#      value: CustomValue
 ---
 apiVersion: cloud.google.com/v1
 kind: BackendConfig
@@ -165,7 +179,6 @@ spec:
   timeoutSec: 30
   connectionDraining:
     drainingTimeoutSec: 60
-  sessionAffinity: CLIENT_IP
-  customRequestHeaders:
-    - name: X-Custom-Header
-      value: CustomValue
+#  customRequestHeaders:
+#    - name: X-Custom-Header
+#      value: CustomValue

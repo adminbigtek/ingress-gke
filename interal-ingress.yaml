@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app3-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app3
+  template:
+    metadata:
+      labels:
+        app: app3
+    spec:
+      containers:
+      - name: app3
+        image: us-docker.pkg.dev/google-samples/containers/gke/hello-app:1.0
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 30
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app3-service
+  annotations:
+    cloud.google.com/backend-config: '{"ports": {"http-port": "app3-backend-config"}}'
+spec:
+  selector:
+    app: app3
+  ports:
+  - name: http-port
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+---
+# Internal Ingress for app3
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-internal-ingress
+  annotations:
+    kubernetes.io/ingress.class: "gce-internal"  # Annotation for Internal Load Balancer
+spec:
+  rules:
+  - host: app3-internal.mrcloud.vn
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app3-service
+            port:
+              number: 80
+---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: app3-backend-config
+spec:
+  healthCheck:
+    checkIntervalSec: 30
+    timeoutSec: 10
+    healthyThreshold: 1
+    unhealthyThreshold: 3
+    type: HTTP
+    requestPath: /healthz
+    port: 8080
+  timeoutSec: 30
+  connectionDraining:
+    drainingTimeoutSec: 60
+---
+# Managed Certificate
