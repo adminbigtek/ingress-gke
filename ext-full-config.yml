@@ -145,6 +145,9 @@ spec:
   timeoutSec: 30
   connectionDraining:
     drainingTimeoutSec: 60
+  customRequestHeaders:
+    - name: X-Custom-Header
+      value: CustomValue
 ---
 apiVersion: cloud.google.com/v1
 kind: BackendConfig
@@ -162,3 +165,7 @@ spec:
   timeoutSec: 30
   connectionDraining:
     drainingTimeoutSec: 60
+  sessionAffinity: CLIENT_IP
+  customRequestHeaders:
+    - name: X-Custom-Header
+      value: CustomValue
