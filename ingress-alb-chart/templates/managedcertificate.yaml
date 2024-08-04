@@ -1,0 +1,9 @@
+# templates/managedcertificate.yaml
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: {{ .Values.ingress.managedCertificateName }}
+spec:
+  domains:
+    - {{ .Values.ingress.hosts[0].host }}
+    - {{ .Values.ingress.hosts[1].host }}

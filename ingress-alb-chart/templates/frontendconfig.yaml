@@ -1,0 +1,8 @@
+# templates/frontendconfig.yaml
+apiVersion: networking.gke.io/v1beta1
+kind: FrontendConfig
+metadata:
+  name: {{ .Values.frontendConfig.name }}
+spec:
+  redirectToHttps:
+    enabled: {{ .Values.frontendConfig.redirectToHttps.enabled }}

@@ -87,7 +87,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.global-static-ip-name: "ip-ingress"
     networking.gke.io/managed-certificates: "my-managed-cert"
-#   networking.gke.io/frontend-config: "my-frontend-config"
+    networking.gke.io/frontend-config: "my-frontend-config"
     networking.gke.io/ingress.global-classic: "false"
 spec:
   rules:

@@ -1,0 +1,34 @@
+# templates/backendconfig.yaml
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: {{ .Values.backendConfig.app1.name }}
+spec:
+  healthCheck:
+    checkIntervalSec: {{ .Values.backendConfig.app1.healthCheck.checkIntervalSec }}
+    timeoutSec: {{ .Values.backendConfig.app1.healthCheck.timeoutSec }}
+    healthyThreshold: {{ .Values.backendConfig.app1.healthCheck.healthyThreshold }}
+    unhealthyThreshold: {{ .Values.backendConfig.app1.healthCheck.unhealthyThreshold }}
+    type: {{ .Values.backendConfig.app1.healthCheck.type }}
+    requestPath: {{ .Values.backendConfig.app1.healthCheck.requestPath }}
+    port: {{ .Values.backendConfig.app1.healthCheck.port }}
+  timeoutSec: {{ .Values.backendConfig.app1.timeoutSec }}
+  connectionDraining:
+    drainingTimeoutSec: {{ .Values.backendConfig.app1.connectionDraining.drainingTimeoutSec }}
+---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: {{ .Values.backendConfig.app2.name }}
+spec:
+  healthCheck:
+    checkIntervalSec: {{ .Values.backendConfig.app2.healthCheck.checkIntervalSec }}
+    timeoutSec: {{ .Values.backendConfig.app2.healthCheck.timeoutSec }}
+    healthyThreshold: {{ .Values.backendConfig.app2.healthCheck.healthyThreshold }}
+    unhealthyThreshold: {{ .Values.backendConfig.app2.healthCheck.unhealthyThreshold }}
+    type: {{ .Values.backendConfig.app2.healthCheck.type }}
+    requestPath: {{ .Values.backendConfig.app2.healthCheck.requestPath }}
+    port: {{ .Values.backendConfig.app2.healthCheck.port }}
+  timeoutSec: {{ .Values.backendConfig.app2.timeoutSec }}
+  connectionDraining:
+    drainingTimeoutSec: {{ .Values.backendConfig.app2.connectionDraining.drainingTimeoutSec }}

@@ -1,15 +1,28 @@
+# templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "ingress-alb-chart.fullname" . }}
-  labels:
-    {{- include "ingress-alb-chart.labels" . | nindent 4 }}
+  name: {{ .Values.service.app1.name }}
+  annotations:
+    cloud.google.com/backend-config: '{"ports": {"http-port": "{{ .Values.backendConfig.app1.name }}"}}'
 spec:
-  type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
   selector:
-    {{- include "ingress-alb-chart.selectorLabels" . | nindent 4 }}
+    app: app1
+  ports:
+    - protocol: TCP
+      port: {{ .Values.service.app1.port }}
+      targetPort: {{ .Values.service.app1.targetPort }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.app2.name }}
+  annotations:
+    cloud.google.com/backend-config: '{"ports": {"http-port": "{{ .Values.backendConfig.app2.name }}"}}'
+spec:
+  selector:
+    app: app2
+  ports:
+    - protocol: TCP
+      port: {{ .Values.service.app2.port }}
+      targetPort: {{ .Values.service.app2.targetPort }}
