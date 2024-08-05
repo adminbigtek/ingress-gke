@@ -52,7 +52,7 @@ metadata:
   name: my-app-internal-ingress
   annotations:
     kubernetes.io/ingress.class: "gce-internal" # Specifies Internal Load Balancer
-    kubernetes.io/ingress.regional-static-ip-name: "ip-for-ingress" # Specify the static IP name
+    kubernetes.io/ingress.regional-static-ip-name: "int-ip-ingress" # Specify the static IP name
 spec:
   ingressClassName: gce-internal # Specifies Internal Load Balancer
   rules:
@@ -66,6 +66,10 @@ spec:
             name: app3-service
             port:
               number: 80
+  tls:
+  - hosts:
+    - app3-internal.mrcloud.vn
+    secretName: app3-tls # Reference to the self-managed certificate secret - đây là bắt buộc vì ilb google ko support tạo ssl tự động
 ---
 apiVersion: cloud.google.com/v1
 kind: BackendConfig
