@@ -1,6 +1,5 @@
 "# ingress-gke" 
-# external ingress
-# step by step for config file ext-full-config.yaml
+# 1. tep by step for config file ext-full-config.yaml
 
 
 
@@ -9,7 +8,7 @@
 
 
 
-# internal ingress step by step for config file int-full-config.yaml
+# 2. internal ingress step by step for config file int-full-config.yaml
 Cách thực hiện chi tiết:
 Tạo chứng chỉ SSL tự quản lý:
 Bạn có thể tạo chứng chỉ SSL tự quản lý bằng công cụ openssl:
